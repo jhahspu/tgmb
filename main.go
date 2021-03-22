@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jhahspu/tgmb/data"
 )
@@ -15,5 +17,13 @@ func main() {
 		})
 	})
 
-	server.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "9000"
+	}
+
+	err := server.Run(":" + port)
+	if err != nil {
+		panic(err)
+	}
 }
