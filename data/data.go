@@ -63,6 +63,6 @@ func Rnd() []Movie {
 func randSlice(n int) []int {
 	rand.Seed(time.Now().Unix())
 	x := rand.Perm(n)
-	y := x[:72]
+	y := x[:120]
 	return y
 }
