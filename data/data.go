@@ -14,16 +14,12 @@ type Movie struct {
 	Title       string `json:"title"`
 	Tagline     string `json:"tagline"`
 	ReleaseDate string `json:"release_date"`
-	Runtime     int    `json:"runtime"`
-	Genres      string `json:"genres"`
-	Overview    string `json:"overview"`
-	Poster      string `json:"poster"`
 	Backdrop    string `json:"backdrop"`
 	Trailers    string `json:"trailers"`
 }
 
 func Rnd() []Movie {
-	url := "https://raw.githubusercontent.com/jhahspu/tgm_vuejs/main/resources/mvs_1485.csv"
+	url := "https://raw.githubusercontent.com/jhahspu/tgm_vuejs/main/resources/movies_1616.csv"
 	fm, err := http.Get(url)
 	if err != nil {
 		log.Fatalf("unable to read from url, %v", err)
@@ -36,7 +32,7 @@ func Rnd() []Movie {
 		log.Fatalf("unable to parse file as CSV, %v", err)
 	}
 
-	rs := randSlice(1485)
+	rs := randSlice(1616)
 
 	mvs := make([]Movie, 0, 200)
 	for _, pos := range rs {
@@ -47,12 +43,8 @@ func Rnd() []Movie {
 				mv.Title = record[2]
 				mv.Tagline = record[3]
 				mv.ReleaseDate = record[4]
-				mv.Runtime, _ = strconv.Atoi(record[5])
-				mv.Genres = record[6]
-				mv.Overview = record[7]
-				mv.Poster = record[8]
-				mv.Backdrop = record[9]
-				mv.Trailers = record[10]
+				mv.Backdrop = record[5]
+				mv.Trailers = record[6]
 				mvs = append(mvs, mv)
 			}
 		}
