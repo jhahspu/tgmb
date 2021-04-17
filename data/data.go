@@ -4,32 +4,27 @@ import (
 	"encoding/csv"
 	"log"
 	"math/rand"
+	"net/http"
 	"os"
 	"strconv"
 	"time"
-)
 
-type Movie struct {
-	TmdbID      int    `json:"tmdb_id"`
-	Title       string `json:"title"`
-	Tagline     string `json:"tagline"`
-	ReleaseDate string `json:"release_date"`
-	Backdrop    string `json:"backdrop"`
-	Trailers    string `json:"trailers"`
-}
+	"github.com/gin-gonic/gin"
+	"github.com/jhahspu/tgmb/models"
+)
 
 /**
 *		Rnd will return 120 movies
 *
 **/
-func Rnd() []Movie {
+func Rnd(c *gin.Context) {
 	records := readCSV("movies.csv")
 	rs := randSlice(1616)
-	mvs := make([]Movie, 0, 200)
+	mvs := make([]models.Movie, 0, 200)
 	for _, pos := range rs {
 		for i, record := range records[1:] {
 			if i == pos {
-				mv := Movie{}
+				mv := models.Movie{}
 				mv.TmdbID, _ = strconv.Atoi(record[1])
 				mv.Title = record[2]
 				mv.Tagline = record[3]
@@ -40,7 +35,8 @@ func Rnd() []Movie {
 			}
 		}
 	}
-	return mvs
+
+	c.JSON(http.StatusOK, mvs)
 }
 
 /**

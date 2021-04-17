@@ -6,20 +6,19 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/jhahspu/tgmb/data"
+	"github.com/jhahspu/tgmb/tmdb"
 )
 
 func main() {
+
 	server := gin.New()
 	server.Use(gin.Logger())
 	server.Use(gin.Recovery())
 	server.Use(cors.Default())
 
-	server.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(200, gin.H{
-			"message": "et voila",
-			"mvs":     data.Rnd(),
-		})
-	})
+	server.GET("/random", data.Rnd)
+	server.GET("/discover", tmdb.GetDiscover)
+	server.GET("/trailers/:id", tmdb.GetTrailers)
 
 	port := os.Getenv("PORT")
 	if port == "" {
