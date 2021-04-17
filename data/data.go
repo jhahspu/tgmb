@@ -4,7 +4,7 @@ import (
 	"encoding/csv"
 	"log"
 	"math/rand"
-	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -18,22 +18,13 @@ type Movie struct {
 	Trailers    string `json:"trailers"`
 }
 
+/**
+*		Rnd will return 120 movies
+*
+**/
 func Rnd() []Movie {
-	url := "https://raw.githubusercontent.com/jhahspu/tgm_vuejs/main/resources/movies_1616.csv"
-	fm, err := http.Get(url)
-	if err != nil {
-		log.Fatalf("unable to read from url, %v", err)
-	}
-	defer fm.Body.Close()
-
-	cv := csv.NewReader(fm.Body)
-	records, err := cv.ReadAll()
-	if err != nil {
-		log.Fatalf("unable to parse file as CSV, %v", err)
-	}
-
+	records := readCSV("movies.csv")
 	rs := randSlice(1616)
-
 	mvs := make([]Movie, 0, 200)
 	for _, pos := range rs {
 		for i, record := range records[1:] {
@@ -52,9 +43,38 @@ func Rnd() []Movie {
 	return mvs
 }
 
+/**
+*		Create Random Slice of N intergers
+*		Return first 120
+*
+**/
 func randSlice(n int) []int {
 	rand.Seed(time.Now().Unix())
 	x := rand.Perm(n)
 	y := x[:120]
 	return y
+}
+
+/**
+*		Read CSV from file
+*		Return records
+**/
+func readCSV(filepath string) [][]string {
+	f, err := os.Open(filepath)
+	handleErrors(err, "Unable to read input file")
+	defer f.Close()
+	csvreader := csv.NewReader(f)
+	records, err := csvreader.ReadAll()
+	handleErrors(err, "Unable to parse file as CSV")
+	return records
+}
+
+/**
+*		Error Handler
+*
+**/
+func handleErrors(err error, msg string) {
+	if err != nil {
+		log.Fatalf("[Error] %s %v", msg, err)
+	}
 }
