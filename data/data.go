@@ -6,7 +6,9 @@ import (
 	"math/rand"
 	"net/http"
 	"os"
+	"sort"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -20,23 +22,37 @@ import (
 func Rnd(c *gin.Context) {
 	records := readCSV("movies.csv")
 	rs := randSlice(1616)
-	mvs := make([]models.Movie, 0, 200)
+	sort.Ints(rs)
+	mvs := make([]models.Movie, 0, 120)
+	wg := sync.WaitGroup{}
 	for _, pos := range rs {
-		for i, record := range records[1:] {
-			if i == pos {
-				mv := models.Movie{}
-				mv.TmdbID, _ = strconv.Atoi(record[1])
-				mv.Title = record[2]
-				mv.Tagline = record[3]
-				mv.ReleaseDate = record[4]
-				mv.Backdrop = record[5]
-				mv.Trailers = record[6]
-				mvs = append(mvs, mv)
-			}
+		wg.Add(1)
+		go func(pos int) {
+			mvs = append(mvs, getMovie(pos, records))
+			wg.Done()
+		}(pos)
+	}
+	wg.Wait()
+	c.JSON(http.StatusOK, mvs)
+}
+
+/**
+*		Find Row by ID
+*			& return Movie
+**/
+func getMovie(id int, records [][]string) (movie models.Movie) {
+	mv := models.Movie{}
+	for i, record := range records {
+		if i == id {
+			mv.TmdbID, _ = strconv.Atoi(record[1])
+			mv.Title = record[2]
+			mv.Tagline = record[3]
+			mv.ReleaseDate = record[4]
+			mv.Backdrop = record[5]
+			mv.Trailers = record[6]
 		}
 	}
-
-	c.JSON(http.StatusOK, mvs)
+	return mv
 }
 
 /**

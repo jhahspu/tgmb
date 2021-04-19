@@ -7,4 +7,6 @@ Simple API for TG Movies App
   - return 120 movie titles
   - purpose of 120 is to cache future requests
   - wider randomness
-
++ [x] discover movies from tmdb
++ [x] trailers
++ [ ] trending
