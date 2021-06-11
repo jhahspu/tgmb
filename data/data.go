@@ -48,8 +48,9 @@ func getMovie(id int, records [][]string) (movie models.Movie) {
 			mv.Title = record[2]
 			mv.Tagline = record[3]
 			mv.ReleaseDate = record[4]
-			mv.Backdrop = record[5]
-			mv.Trailers = record[6]
+			mv.Poster = record[5]
+			mv.Backdrop = record[6]
+			mv.Trailers = record[7]
 		}
 	}
 	return mv
