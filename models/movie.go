@@ -1,7 +1,7 @@
 package models
 
 type Movie struct {
-	TmdbID      int    `json:"tmdb_id"`
+	TmdbID      int    `json:"id"`
 	Title       string `json:"title"`
 	Tagline     string `json:"tagline"`
 	ReleaseDate string `json:"release_date"`
