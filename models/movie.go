@@ -5,7 +5,7 @@ type Movie struct {
 	Title       string `json:"title"`
 	Tagline     string `json:"tagline"`
 	ReleaseDate string `json:"release_date"`
-	Poster      string `json:"poster"`
-	Backdrop    string `json:"backdrop"`
+	Poster      string `json:"poster_path"`
+	Backdrop    string `json:"backdrop_path"`
 	Trailers    string `json:"trailers"`
 }
