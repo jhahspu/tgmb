@@ -19,6 +19,7 @@ func main() {
 	server.GET("/random", data.Rnd)
 	server.GET("/discover", tmdb.GetDiscover)
 	server.GET("/trailers/:id", tmdb.GetTrailers)
+	server.GET("/details/:id", tmdb.GetOne)
 
 	port := os.Getenv("PORT")
 	if port == "" {

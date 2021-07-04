@@ -23,7 +23,7 @@ func Rnd(c *gin.Context) {
 	records := readCSV("movies.csv")
 	rs := randSlice(1616)
 	sort.Ints(rs)
-	mvs := make([]models.Movie, 0, 120)
+	mvs := make([]models.Movie, 0, 20)
 	wg := sync.WaitGroup{}
 	for _, pos := range rs {
 		wg.Add(1)
@@ -64,7 +64,7 @@ func getMovie(id int, records [][]string) (movie models.Movie) {
 func randSlice(n int) []int {
 	rand.Seed(time.Now().Unix())
 	x := rand.Perm(n)
-	y := x[:120]
+	y := x[:20]
 	return y
 }
 
