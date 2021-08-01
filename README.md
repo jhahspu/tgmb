@@ -10,3 +10,11 @@ Simple API for TG Movies App
 + [x] discover movies from tmdb
 + [x] trailers
 + [ ] trending
+
+
+### .env
+
+```
+TMDB_KEY=""
+
+```
