@@ -21,15 +21,15 @@ func InitDBConnections() error {
 }
 
 type ListMovies struct {
-	TMDb     int    `json:"tmdb"`
+	TMDb     int    `json:"id"`
 	Title    string `json:"title"`
 	Tagline  string `json:"tagline"`
-	Release  string `json:"release"`
+	Release  string `json:"release_date"`
 	Runtime  int    `json:"runtime"`
 	Genres   string `json:"genres"`
 	Overview string `json:"overview"`
-	Poster   string `json:"poster"`
-	Backdrop string `json:"backdrop"`
+	Poster   string `json:"poster_path"`
+	Backdrop string `json:"backdrop_path"`
 	Trailers string `json:"trailers"`
 }
 
