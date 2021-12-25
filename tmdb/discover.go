@@ -9,6 +9,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/jhahspu/tgmb/models/response"
+
+	"github.com/joho/godotenv"
 )
 
 type Discover struct {
@@ -59,4 +61,36 @@ func GetDiscover(c *gin.Context) {
 	json.Unmarshal(resData, &resObj)
 
 	c.JSON(http.StatusOK, resObj)
+}
+
+func DiscoverPage(c *gin.Context) {
+
+	godotenv.Load(".env")
+	tmdb_key := os.Getenv("TMDB_KEY")
+
+	url := "https://api.themoviedb.org/3/discover/movie?api_key=" + tmdb_key + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&year=2021"
+
+	httpResponse, err := http.Get(url)
+	if err != nil {
+		res := response.Error{
+			Code:    http.StatusBadRequest,
+			Message: "Invalid ID",
+		}
+
+		c.JSON(http.StatusBadRequest, res)
+		return
+	}
+
+	resData, err := ioutil.ReadAll(httpResponse.Body)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var resObj Discover
+	json.Unmarshal(resData, &resObj)
+
+	c.HTML(http.StatusOK, "discover.tmpl", gin.H{
+		"rm": resObj.Results,
+	})
+
 }

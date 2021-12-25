@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/assets/styles.min.css">
+  <script src="/assets/app.js"></script>
+
+  <title>{{ .Title }}</title>
+</head>
+<body>
+
+  {{ template "header" .}}
+
+  <main>
+    <div class="inner">
+      <section>
+        <h1>Random Titles</h1>
+        <a class="movie-cards" href="#">
+
+          {{ range .rm }}
+            <div class="movie-card">
+              <img
+                loading="lazy"
+                src="https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces{{.Backdrop}}"
+                alt="Cinderella Man">
+                
+                <div class="movie-details">
+                  <h3 class="movie-title">{{ .Title }}</h3>
+                  <p class="movie-rdate">{{ .Release }} | {{ .Runtime }}min</p>
+                </div>
+            </div>
+          {{ end }}
+
+        </a>
+      </section>
+    </div>
+  </main>
+
+  {{ template "footer" .}}
+  
+</body>
+</html>

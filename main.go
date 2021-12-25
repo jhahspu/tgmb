@@ -21,11 +21,26 @@ func main() {
 	server.Use(gin.Recovery())
 	server.Use(cors.Default())
 
-	server.GET("/random", db.GetRandom)
-	server.GET("/random/:genre", db.GetRandomByGenre)
-	server.GET("/discover", tmdb.GetDiscover)
-	server.GET("/trailers/:id", tmdb.GetTrailers)
-	server.GET("/details/:id", tmdb.GetOne)
+	server.LoadHTMLGlob("templates/*.tmpl")
+	server.Static("/assets", "./assets")
+
+	server.GET("/", db.RandomPage)
+	server.GET("/discover", tmdb.DiscoverPage)
+
+	// server.GET("/random", db.GetRandom)
+	// server.GET("/random/:genre", db.GetRandomByGenre)
+	// server.GET("/discover", tmdb.GetDiscover)
+	// server.GET("/trailers/:id", tmdb.GetTrailers)
+	// server.GET("/details/:id", tmdb.GetOne)
+
+	v1 := server.Group("/v1")
+	{
+		v1.GET("/random", db.GetRandom)
+		v1.GET("/random/:genre", db.GetRandomByGenre)
+		v1.GET("/discover", tmdb.GetDiscover)
+		v1.GET("/trailers/:id", tmdb.GetTrailers)
+		v1.GET("/details/:id", tmdb.GetOne)
+	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
