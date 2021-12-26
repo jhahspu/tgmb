@@ -90,7 +90,8 @@ func DiscoverPage(c *gin.Context) {
 	json.Unmarshal(resData, &resObj)
 
 	c.HTML(http.StatusOK, "discover.tmpl", gin.H{
-		"rm": resObj.Results,
+		"Title": "Discover",
+		"rm":    resObj.Results,
 	})
 
 }

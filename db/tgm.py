@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS mvs (
   overview text,
   poster varchar(255),
   backdrop varchar(255),
-  trailers varchar(255)
+  trailers varchar(255),
+  slug varchar(255)
 )
 """
 c.execute(CREATE_TBL)
@@ -36,6 +37,7 @@ def clear_inputs():
   e8.set('')
   e9.set('')
   e10.set('')
+  e11.set('')
   q.set('')
 
 
@@ -54,6 +56,7 @@ def selected_row(event):
   e8.set(item['values'][7])
   e9.set(item['values'][8])
   e10.set(item['values'][9])
+  e11.set(item['values'][10])
 
 def search_all():
   get_all(q.get())
@@ -79,7 +82,7 @@ def app_add():
   with conn:
     c.execute("""
     INSERT INTO mvs
-      VALUES (:tmdb, :title, :tagline, :release, :runtime, :genres, :overview, :poster, :backdrop, :trailers)
+      VALUES (:tmdb, :title, :tagline, :release, :runtime, :genres, :overview, :poster, :backdrop, :trailers, :slug)
     """, {
       'tmdb': e1.get(),
       'title': e2.get(),
@@ -90,7 +93,8 @@ def app_add():
       'overview': e7.get(),
       'poster': e8.get(),
       'backdrop': e9.get(),
-      'trailers': e10.get()
+      'trailers': e10.get(),
+      'slug': e11.get()
       }
     )
   get_all()
@@ -99,7 +103,7 @@ def app_update():
   with conn:
     c.execute("""
     UPDATE mvs
-      SET title=:title, tagline=:tagline, release=:release, runtime=:runtime, genres=:genres, overview=:overview, poster=:poster, backdrop=:backdrop, trailers=:trailers
+      SET title=:title, tagline=:tagline, release=:release, runtime=:runtime, genres=:genres, overview=:overview, poster=:poster, backdrop=:backdrop, trailers=:trailers, slug=:slug
       WHERE tmdb=:tmdb
     """, {
         'tmdb': e1.get(),
@@ -112,6 +116,7 @@ def app_update():
         'poster': e8.get(),
         'backdrop': e9.get(),
         'trailers': e10.get(),
+        'slug': e11.get(),
         }
     )
   get_all()
@@ -129,10 +134,10 @@ def app_delete():
 def insertFromTSV():
   with open('movies.tsv', 'r', encoding="utf8") as f:
     dr = csv.DictReader(f, delimiter="\t")
-    to_db = [(i['tmdb'], i['title'], i['tagline'], i['release'], i['runtime'], i['genres'], i['overview'], i['poster'], i['backdrop'], i['trailers']) for i in dr]
+    to_db = [(i['tmdb'], i['title'], i['tagline'], i['release'], i['runtime'], i['genres'], i['overview'], i['poster'], i['backdrop'], i['trailers'], i['slug']) for i in dr]
   with conn:
     c.execute("DELETE FROM mvs")
-    c.executemany("INSERT INTO mvs (tmdb, title, tagline, release, runtime, genres, overview, poster, backdrop, trailers) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", to_db)
+    c.executemany("INSERT INTO mvs (tmdb, title, tagline, release, runtime, genres, overview, poster, backdrop, trailers, slug) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", to_db)
   get_all()
 
 root = tk.Tk()
@@ -146,7 +151,7 @@ wrapper2.pack(fill="both", expand="yes", padx=20, pady=10)
 wrapper3.pack(fill="both", expand="yes", padx=20, pady=10)
 
 # List: Wrapper 1
-trv = ttk.Treeview(wrapper1, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), show="headings", height="6")
+trv = ttk.Treeview(wrapper1, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11), show="headings", height="6")
 trv.heading(1, text="tMDb")
 trv.heading(2, text="Title")
 trv.heading(3, text="Tagline")
@@ -157,6 +162,7 @@ trv.heading(7, text="Overview")
 trv.heading(8, text="Poster")
 trv.heading(9, text="Backdrop")
 trv.heading(10, text="Trailers")
+trv.heading(11, text="Slug")
 trv.pack(fill="both")
 
 trv.bind('<Double 1>', selected_row)
@@ -241,6 +247,13 @@ lbl10 = tk.Label(wrapper3, text="Trailers")
 lbl10.grid(row=9, column=0, padx=5, pady=3)
 ent10 = tk.Entry(wrapper3, textvariable=e10)
 ent10.grid(row=9, column=1, padx=5, pady=3)
+
+
+e11 = StringVar()
+lbl11 = tk.Label(wrapper3, text="Slug")
+lbl11.grid(row=10, column=0, padx=5, pady=3)
+ent11 = tk.Entry(wrapper3, textvariable=e11)
+ent11.grid(row=10, column=1, padx=5, pady=3)
 
 
 

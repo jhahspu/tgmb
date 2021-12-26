@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="/assets/styles.min.css">
+  <script src="/assets/app.js"></script>
+
+  <title>{{ .Title }}</title>
+</head>
+<body>
+
+  {{ template "header" .}}
+
+  <main>
+    <div class="inner">
+      <section>
+        <h1>One Movie:</h1>
+        
+          {{range .rm}}
+          
+            <p>{{.TMDb}}</p>
+            <p>{{.Title}}</p>
+            <p>{{.Tagline}}</p>
+            <p>{{.Release}}</p>
+            <p>{{.Runtime}}</p>
+            <p>{{.Genres}}</p>
+            <p>{{.Overview}}</p>
+            <p>{{.Poster}}</p>
+            <p>{{.Backdrop}}</p>
+            <p>{{.Trailers}}</p>
+            <p>{{.Slug}}</p>
+
+          {{end}}
+      </section>
+    </div>
+  </main>
+
+  {{ template "footer" .}}
+  
+</body>
+</html>

@@ -25,6 +25,7 @@ func main() {
 	server.Static("/assets", "./assets")
 
 	server.GET("/", db.RandomPage)
+	server.GET("/movie/:slug", db.GetMovieBySlug)
 	server.GET("/discover", tmdb.DiscoverPage)
 
 	// server.GET("/random", db.GetRandom)

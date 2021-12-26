@@ -18,23 +18,23 @@
     <div class="inner">
       <section>
         <h1>Discover Titles</h1>
-        <a class="movie-cards" href="#">
+        <div class="movie-cards">
 
           {{ range .rm  }}
             <div class="movie-card">
               <img
                 loading="lazy"
                 src="https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces{{.BackdropPath}}"
-                alt="Cinderella Man">
+                alt="{{.Title}}">
                 
                 <div class="movie-details">
                   <h3 class="movie-title">{{ .Title }}</h3>
                   <p class="movie-rdate">{{ .ReleaseDate }}</p>
                 </div>
-            </div>
+              </div>
           {{ end }}
 
-        </a>
+        </div>
       </section>
     </div>
   </main>
