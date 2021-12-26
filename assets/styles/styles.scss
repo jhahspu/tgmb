@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+@import "./vars";
+@import "./reset";
+@import "./layout";
+
+@import "./movie-cards";
+@import "./modal";
+
+@import "./mobile";
+
+
+.one-movie {
+  padding-bottom: 1.5rem;
+  
+  img {
+    width: 100%;
+    aspect-ratio: 1920/800;
+  }
+}
+
+.trailers {
+
+  div {
+    margin-top: 1.5rem;
+  }
+
+  iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+    border: none;
+  }
+}

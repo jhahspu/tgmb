@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/assets/styles.min.css">
-  <script src="/assets/app.js"></script>
+  <link rel="stylesheet" href="/assets/styles/styles.min.css">
+  <script src="/assets/js/app.js" defer></script>
 
   <title>{{ .Title }}</title>
 </head>
@@ -16,22 +16,30 @@
 
   <main>
     <div class="inner">
-      <section>
-        <h1>One Movie:</h1>
-        
+      <section class="one-movie">
           {{range .rm}}
-          
-            <p>{{.TMDb}}</p>
-            <p>{{.Title}}</p>
-            <p>{{.Tagline}}</p>
-            <p>{{.Release}}</p>
-            <p>{{.Runtime}}</p>
+
+          <h1>{{.Title}}</h1>
+
+          <img
+            src="https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces{{.Backdrop}}"
+            alt="{{.Title}}">
+
+            <h3>{{.Tagline}}</h3>
+            <p>{{.Release}} | {{.Runtime}}</p>
+            <br>
             <p>{{.Genres}}</p>
+            <br>
             <p>{{.Overview}}</p>
-            <p>{{.Poster}}</p>
-            <p>{{.Backdrop}}</p>
+            <!-- <p>{{.Poster}}</p>
             <p>{{.Trailers}}</p>
-            <p>{{.Slug}}</p>
+            <p>{{.Slug}}</p> -->
+
+            <div
+              class="trailers"
+              data-trailers="{{.Trailers}}">
+
+            </div>
 
           {{end}}
       </section>

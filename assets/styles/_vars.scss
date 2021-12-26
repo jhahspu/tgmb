@@ -1,0 +1,10 @@
+
+$white: hsla(267, 0%, 99%, 1);
+$black: hsla(267, 5%, 5%, 1);
+$gray: hsla(267, 0.7%, 76%, 1);
+
+$bradius: 3px;
+
+@mixin contain {
+  margin: 0 5%;
+}

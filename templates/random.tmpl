@@ -5,8 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/assets/styles.min.css">
-  <script src="/assets/app.js"></script>
+  <link rel="stylesheet" href="/assets/styles/styles.min.css">
+  <script src="/assets/js/app.js"></script>
 
   <title>{{ .Title }}</title>
 </head>
@@ -29,7 +29,7 @@
                 
                 <div class="movie-details">
                   <h3 class="movie-title">{{ .Title }}</h3>
-                  <p class="movie-rdate">{{ .Release }} | {{ .Runtime }}min</p>
+                  <p class="movie-rdate">{{ .Release }} | {{ .Runtime }}</p>
                 </div>
             </a>
           {{ end }}

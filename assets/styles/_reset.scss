@@ -1,0 +1,14 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: 'Montserrat', Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  overflow-y: scroll;
+}
+
+
