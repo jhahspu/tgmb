@@ -46,14 +46,15 @@ iframe {
 }
 
 main {
-  padding: 1rem 0;
+  padding-top: 1.5rem;
+  margin: 0 2%;
 }
 
 .card-container {
   min-height: 100vh;
   max-width: var(--mwidth);
-  margin: 1.5rem auto 0;
-  padding-bottom: 2rem;
+  margin: 0 auto;
+  padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;

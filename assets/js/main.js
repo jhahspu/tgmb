@@ -1,3 +1,5 @@
+let movies = [];
+
 const getData = async () => {
   const response = await fetch('/v1/random');
   const data = await response.json();
@@ -38,6 +40,8 @@ const lastCardObserver = new IntersectionObserver(entries => {
   if (!lastCard.isIntersecting) return
   getData().then(mvs => {
     mvs.forEach(el => {
+      movies.push(el)
+      sessionStorage.setItem('mvs', JSON.stringify(movies))
       makeCard(el)
     })
   })
@@ -49,9 +53,20 @@ const lastCardObserver = new IntersectionObserver(entries => {
 
 // PAGE LOADED
 document.addEventListener('DOMContentLoaded', () => {
-  const movies = getData().then(mvs => {
-    mvs.forEach(el => {
+  if (sessionStorage.getItem('mvs') && sessionStorage.getItem('mvs').length > 0) {
+    movies = JSON.parse(sessionStorage.getItem('mvs'))
+    movies.forEach(el => {
       makeCard(el)
     })
-  }).then(() => lastCardObserver.observe(document.querySelector('.card:last-child')))
+    lastCardObserver.observe(document.querySelector('.card:last-child'))
+  } else {
+    getData().then(mvs => {
+      mvs.forEach(el => {
+        movies.push(el)
+        sessionStorage.setItem('mvs', JSON.stringify(movies))
+        makeCard(el)
+      })
+    }).then(() => lastCardObserver.observe(document.querySelector('.card:last-child')))
+  }
+  
 })
