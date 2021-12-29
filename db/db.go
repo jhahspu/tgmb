@@ -77,45 +77,6 @@ func GetRandom(c *gin.Context) {
 	c.JSON(http.StatusOK, items)
 }
 
-func RandomPage(c *gin.Context) {
-	items := make([]ListMovies, 0)
-
-	rows, err := DBClient.Query(getRandom)
-	if err != nil {
-		c.HTML(http.StatusBadRequest, "random.tmpl", gin.H{
-			"msg": "error getting posts from db",
-		})
-		c.Abort()
-		return
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		var i ListMovies
-		if err := rows.Scan(
-			&i.TMDb,
-			&i.Title,
-			&i.Tagline,
-			&i.Release,
-			&i.Runtime,
-			&i.Genres,
-			&i.Overview,
-			&i.Poster,
-			&i.Backdrop,
-			&i.Trailers,
-			&i.Slug,
-		); err != nil {
-			log.Fatal(err)
-		}
-		items = append(items, i)
-	}
-
-	c.HTML(http.StatusOK, "random.tmpl", gin.H{
-		"Title": "Random Titles",
-		"rm":    items,
-	})
-}
-
 const getRandomByGenre = `
 SELECT tmdb, title, tagline, release, runtime, genres, overview, poster, backdrop, trailers, slug
 FROM mvs
@@ -207,5 +168,12 @@ func GetMovieBySlug(c *gin.Context) {
 	c.HTML(http.StatusOK, "one.tmpl", gin.H{
 		"Title": "Random Titles",
 		"rm":    items,
+	})
+}
+
+// Main Page --- Random Titles
+func RandomPage(c *gin.Context) {
+	c.HTML(http.StatusOK, "random.tmpl", gin.H{
+		"Title": "Top Movie Titles",
 	})
 }

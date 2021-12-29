@@ -5,48 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/assets/styles/styles.min.css">
-  <script src="/assets/js/app.js" defer></script>
+  <link rel="stylesheet" href="/assets/styles/main.css">
+  <script src="/assets/js/one.js" defer></script>
 
   <title>{{ .Title }}</title>
 </head>
 <body>
 
-  {{ template "header" .}}
-
   <main>
-    <div class="inner">
-      <section class="one-movie">
-          {{range .rm}}
+    <section class="one">
+      {{range .rm}}
 
-          <h1>{{.Title}}</h1>
+        <h1 style="text-align: center;">{{.Title}}</h1>
 
-          <img
-            src="https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces{{.Backdrop}}"
-            alt="{{.Title}}">
+        <img
+          src="https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces{{.Backdrop}}"
+          alt="{{.Title}}">
 
-            <h3>{{.Tagline}}</h3>
-            <p>{{.Release}} | {{.Runtime}}</p>
-            <br>
-            <p>{{.Genres}}</p>
-            <br>
-            <p>{{.Overview}}</p>
-            <!-- <p>{{.Poster}}</p>
-            <p>{{.Trailers}}</p>
-            <p>{{.Slug}}</p> -->
+        <h3 style="text-align: center;">{{.Tagline}}</h3>
+        <p style="text-align: center;">{{.Release}} | {{.Runtime}}</p>
+        <hr>
+        <p style="text-align: center;">{{.Genres}}</p>
+        <hr>
+        <p>{{.Overview}}</p>
+        <!-- <p>{{.Poster}}</p>
+        <p>{{.Trailers}}</p>
+        <p>{{.Slug}}</p> -->
 
-            <div
-              class="trailers"
-              data-trailers="{{.Trailers}}">
+        <div
+          class="trailers"
+          data-trailers="{{.Trailers}}">
 
-            </div>
+        </div>
 
-          {{end}}
-      </section>
-    </div>
+      {{end}}
+    </section>
   </main>
-
-  {{ template "footer" .}}
   
 </body>
 </html>
