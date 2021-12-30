@@ -41,12 +41,12 @@ const lastCardObserver = new IntersectionObserver(entries => {
   getData().then(mvs => {
     mvs.forEach(el => {
       movies.push(el)
-      sessionStorage.setItem('mvs', JSON.stringify(movies))
       makeCard(el)
     })
   })
   lastCardObserver.unobserve(lastCard.target)
   lastCardObserver.observe(document.querySelector('.card:last-child'))
+  sessionStorage.setItem('mvs', JSON.stringify(movies))
 }, {})
 
 
@@ -63,10 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
     getData().then(mvs => {
       mvs.forEach(el => {
         movies.push(el)
-        sessionStorage.setItem('mvs', JSON.stringify(movies))
         makeCard(el)
       })
-    }).then(() => lastCardObserver.observe(document.querySelector('.card:last-child')))
+    }).then(() => {
+      lastCardObserver.observe(document.querySelector('.card:last-child'))
+      sessionStorage.setItem('mvs', JSON.stringify(movies))
+    })
   }
   
 })
